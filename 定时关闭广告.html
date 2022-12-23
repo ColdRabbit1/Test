@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关闭</title>
+    <style>
+        .box{
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+    <script>
+        window.addEventListener('load',function (ev) {
+            var timer01 = setTimeout(close,5000);
+            var p = document.querySelector('p');
+            var img = document.querySelector('img');
+            function close() {
+                p.style.display = 'none';
+                img.style.display = 'none';
+                clearTimeout(timer01);
+            }
+        })
+    </script>
+</head>
+<body>
+<div class="box">
+    <p>这是一条广告</p>
+    <img src="images/tianshi.jpeg"/>
+</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+        }
+        .text{
+            text-align: center;
+            cursor: pointer;
+            width: 200px;
+            height: 50px;
+            z-index: 888;
+            background-color: white;
+        }
+        .mask{
+            display: none;
+            width: 500px;
+            height: 400px;
+            position: relative;
+            margin: 200px auto;
+            float: left;
+            background-color: white;
+            left: 200px;
+            z-index: 999;
+        }
+        .title{
+            font-size: 18px;
+            position: absolute;
+            width: 500px;
+            height: 100px;
+            text-align: center;
+            padding-top: 20px;
+            cursor: move;
+        }
+        .close{
+            box-sizing: border-box;
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            font-size: 12px;
+            border-radius: 15px;
+            left: 485px;
+            top: -15px;
+            background-color: white;
+            text-align: center;
+            padding-top: 6px;
+            cursor: pointer;
+        }
+        input{
+            position: absolute;
+            width: 400px;
+            height: 35px;
+            margin: 20px;
+            left: 5px;
+            padding-left: 15px;
+            padding-right: 20px;
+        }
+       #user{
+            top: 90px;
+        }
+        #psd{
+            top: 150px;
+        }
+        button{
+            position: absolute;
+            width: 300px;
+            height: 35px;
+            left: 80px;
+            top: 225px;
+        }
+        .bg{
+            display: none;
+            position: absolute;
+            width: 1511px;
+            height: 728px;
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="text">点击弹出登录框</div>
+<div class="mask">
+    <span class="title">登录</span>
+    <span class="close">关闭</span>
+    <input id="user" type="text" placeholder="用户名"/>
+    <input id="psd" type="password" placeholder="密码"/>
+    <button>登录</button>
+</div>
+<script>
+    //1. 先做点击弹出登录框mask  显示bg 效果
+    var text = document.querySelector('.text');
+    var mask =document.querySelector('.mask');
+    var bg = document.querySelector('.bg');
+    text.addEventListener('click',click);
+    function click() {
+        mask.style.display = 'block';
+        bg.style.display = 'block';
+    }
+    // 2. 点击关闭  隐藏 mask bg
+    var close = document.querySelector('.close');
+    close.addEventListener('click', function () {
+        mask.style.display = 'none';
+        bg.style.display = 'none';
+    });
+    // 3. 做出拖拽效果  需要鼠标按下 mousedown  鼠标移动 mousemove 鼠标松开  mouseup
+    var title = document.querySelector('.title');
+    title.addEventListener('mousedown', function (e) {
+        // 获取鼠标坐标在盒子内的
+         maskX = e.pageX - mask.offsetLeft;
+         maskY = e.pageY - mask.offsetTop;
+         document.addEventListener('mousemove',change);
+        function change(ev) {
+            mask.style.left = ev.pageX - maskX + 'px';
+            mask.style.top = ev.pageY - maskY + 'px';
+        }
+
+        document.addEventListener('mouseup',function () {
+            document.removeEventListener('mousemove',change);
+        });
+    })
+</script>
+</body>
+</html>

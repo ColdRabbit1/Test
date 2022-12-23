@@ -1,0 +1,134 @@
+一. DOM
+    DOM全称文档对象模型（document object model）,主要作用是用来操作页面元素.
+    2. 获取元素方
+               document.getElementById();   //根据元素id获取,
+               document.getElementsByClassName();   //根据类名获取,此处获取的是个集合
+                var p = document.getElementsByTagName('p'); //根据标签名获取
+          H5新增选择器获取,在括号内直接填写选择器就行，支持复合选择器
+                document.querySelector();    //查找单个
+                document.querySelectorAll();   //查找多个
+          //通过节点获取元
+                children.parentNode;    //获取父节点
+                fatherId.children;      //获取子节点,所有元素子节点，childNodes 属性返回所有的节点，包括文本节点、注释节点
+                children.previousElementSibling;    //获取上一个兄弟元素
+                children.nextElementSibling;     //获取下一个兄弟元素
+                fatherId.firstElementChild;     //获取第一个子元素
+                fatherId.lastElementChild;       //获取最后一个子元素
+    3. 操作元素
+                element.className = '';     //设置或者修改类名,会覆盖掉元素原有的类名
+                element.style.backgroundColor = '';     //设置或者修改行内样式
+                element.innerHTML   //识别html语言，不加等号是获取值，加等号是设置值
+                element.innerText   //不识别html语言，不加等号是获取值，加等号设置值
+           获取input元素内容
+                input.checked   //获取的是选中状态,返回布尔类型
+                input.value     //获取输入框的内容
+                input.type      //获取输入框的类型
+!!! offset系列 !!!
+                element.offsetLeft|Top  //获取的是最近的有定位的父元素的左边和上边的距离,如果父盒子都没有定位,则获取的是到页面文档的距离
+                element.offsetWidth|Height      //获取的是元素的真实宽高,包含内容宽高,padding,border
+                element.offsetParent         //获取最近的有定位的父元素
+client系列
+                element.clientTop|Left         //获取的上边框和左边框的宽度,不包括外边距或内边距,属于只读属性
+                element.clientWidth|Height       //获取的是 宽高,包含内容宽高 + padding,属于只读属性
+scroll系列
+                scrollTop|scrollLeft        //获取或设置这个元素的内容顶部|左边（卷起来的）到它的视口可见内容（的顶部|左边）的距离的度量
+                scrollWidth|scrollHeight        //获取的是内容的真实的宽高  +  padding,包括由于 overflow 溢出而在屏幕上不可见的内容。,只读属性
+ 3.2操作自定义属性
+                    element.setAttribute(key,value);     //设置自定义属性,string类型
+                    element.getAttribute(key);      //获取自定义属性
+                    element.removeAttribute(key);       //移除自定义属性
+                    element.dataSet     //H5推荐我们自定义属性写法,以 data- 开头命名属性
+节点操作
+        创建节点    注意：创建的元素在内存中，此时还没有在页面上
+                document.createElement()
+                 element.appendChild()       //添加节点  追加子元素
+                 element.insertBefore(child, 参照元素)       //插入到参照元素的前面
+                 document.write()        //覆盖之前的内容，导致页面重绘
+                element.cloneNode()      //克隆节点 true 深拷贝,拷贝标签还拷贝里面的内容;false 浅拷贝,只拷贝标签,默认false
+                element.removeChild(child)       //删除节点  只能去移除子元素
+                element.remove()        //自杀
+
+二. BOM
+    BOM全称浏览器对象模型（Browser Object Model）      在BOM中,windows是顶级对象,相当于DOM中的document
+页面加载事件
+           window.addEventListener('xxx', function () {})
+                    load    //当页面的所有资源加载完毕触发,包含外部资源
+                    DOMContentLoaded     //当DOM元素加载完毕触发
+                   pageshow     //页面显示的时候
+                   unload       //页面关闭执行
+                   beforeUnload     //关闭之前执行
+                    resize      窗口大小事件
+定时器
+                setTimeout()        //只触发一次,单位;ms,两个参数,第一个:函数,时间
+                clearTimeout(timer);        //移出定时器
+                setInterval()       //触发多次,每隔一定时间执行一次,单位;ms,两个参数,第一个:函数,时间
+                clearInterval(timer1)        //移出定时器
+内置对象
+                        history.go(n)      //go()方法无参数时，相当于history.go(0)，可以刷新当前页面,n为负数时后退,正数前进
+                        screen.width|height    //返回显示器屏幕的宽度|高度
+                        location.href       //获取地址，跳转
+                        location.search     //获取参数
+                        location.replace()      //替换当前页面
+                        location.reload()       //true 强制刷新，不会加载本地缓存，直接请求服务器
+事件
+    事件三要素:事件源,事件类型,事件处理函数
+    事件注册
+                    /* 区别，传统方式只能绑定一个同名的事件，监听方式可以绑定多个同名的事件 */
+
+                    btn.onclick = function () {}         //传统方式注册
+                    btn.addEventListener('click',function(){},flag)  //监听方式注册   flag是false或者不写，监听的事件的冒泡,flag 是true 事件的捕获
+                    function fn () {}
+                    btn.onclick = null       //事件销毁
+                    btn.removeEventListener('mouseover',fn)      //监听方式,移出需要将事件处理函数命名才能移出
+事件流
+    事件捕获（从外到内一层一层传递，直到目标阶段）
+    目标阶段
+    事件冒泡（从内到外一层一层往外冒，直到window）
+事件对象
+    事件对象是用来描述此次事件一些相关数据
+                e.target        //获取目标元素
+                e.type      //获取事件类型
+                e.preventDefault()      //阻止默认行为
+                e.stopPropagation()      //阻止事件冒泡
+                e.pageX|pageY       //鼠标距离页面左上角的位置
+                e.clientX|clientY        //鼠标距离可视窗口的位置
+                e.screenX|screenY       //鼠标距离屏幕的位置
+                e.keyCode       //键盘按下的对应的 ASICC码值,常在监听事件keyup中使用
+事件委托:本应该设置子元素身上的事件，设置给了父元素，利用事件冒泡的特性，让子元素的事件冒泡给父元素，可以通过事件对象.target 就可以获取到目标元素
+常用事件
+            事件类型 	事件描述
+            click 	    点击事件
+            focus 	    焦点事件
+            blur 	    失去焦点
+            keydown 	键盘按下事件
+            keyup 	    键盘弹起事件
+            keypress 	键盘按下
+            mouseover 	鼠标移入
+            mouseenter 	鼠标移入
+            mouseleave 	鼠标移出
+            mouseout 	鼠标移出
+            input 	    输入事件
+            mousedown 	鼠标按下
+            mousemove 	鼠标移动
+            mouseup 	鼠标松开
+            dblclick 	双击事件
+            scroll 	    滚动事件
+ JS执行机制(事件循环)
+        https://blog.csdn.net/weixin_51244384/article/details/122494048
+ 本地存储
+        localStorage:数据是永久存储的当你关闭页面重新打开，数据还在。 按域分，只能看见当前域的
+            setItem();增加一个数据项b,value只能传字符串格式的
+            getItem(key): 读取数据localStorage项
+            removeItem(key): 移除localStorage项
+            clear(key): 移除所有
+        sessionStorage:当页面被关闭时，存储在 sessionStorage 的数据会被清除 。
+ 节流阀:
+        节流阀的理解:简单的讲节流阀是做一个限制让事件不能重复触发,就好像一个木马只能一个人骑，木马的状态是无人骑的（flag=true）
+         当有人以后木马开始工作，工作了就不能再让另一个人上了,所以就要关闭栅栏（flag=false） 当木马一圈转完以后换下一个人 所以栅栏门打开
+         （flag=true）这样如此反复确保一个木马只能有一个人骑
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="number" placeholder="请输入手机号">
+<button>发送</button>
+</body>
+<script>
+    var input = document.querySelector('input');
+    var btu = document.querySelector('button');
+    var time = 10;
+    btu.addEventListener('click',function () {
+        var t1 = setInterval(function () {
+            if(time == 0){
+                clearInterval(t1);
+                btu.disabled = false;
+                btu.innerHTML = "发送";
+                time = 10;
+            }else {
+                btu.disabled = true;
+                btu.innerHTML =time + '(秒)';
+                time--;
+            }
+        },1000)
+
+    })
+</script>
+</html>

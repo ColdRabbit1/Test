@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态表格操作</title>
+    <style>
+        table{
+            position: relative;
+            margin:100px auto;
+            width: 400px;
+            border:black solid 2px;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: center;
+
+
+        }
+        thead{
+            background-color: grey;
+            height: 30px;
+        }
+        tr{
+            height: 20px;
+        }
+        td{
+            width: 40px;
+            border: black solid 1px;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <td>姓名</td>
+        <td>科目</td>
+        <td>分数</td>
+        <td>操作</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<script>
+    // 1. 准备数据
+    var data = [
+        {
+            name:"张三",
+            subject:"JavaScript",
+            score:100
+        },
+        {
+            name:"李四",
+            subject:"JavaScript",
+            score:99
+        },{
+            name:"王五",
+            subject:"JavaScript",
+            score:88
+        },{
+            name:"冷兔",
+            subject:"JavaScript",
+            score:100
+        }
+    ];
+    // 2. 动态生成行 for循环控制生成几行
+for (var i=0; i < data.length; i++){
+    var tbody = document.querySelector('tbody');
+    var tr = document.createElement('tr');
+    tbody.appendChild(tr);
+    // 添加列 for循环控制几列
+    for(var j in data[i]){
+        var td = document.createElement('td');
+        tr.appendChild(td);
+        td.innerHTML = data[i][j];  // 填充数据
+    }
+    // 添加操作列内容
+    var cz = document.createElement('td')
+    tr.appendChild(cz);
+    cz.innerHTML = '<a href="javascript:;">删除</a>'
+    }
+// 3. 添加删除操作
+    // 先获取到全部的a标签
+var as = document.querySelectorAll('a');
+// for 循环给每一个删除添加功能
+    for(var k=0; k<as.length;k++){
+        as[k].onclick = function () {
+            tbody.removeChild(this.parentNode.parentNode);
+        }
+    }
+</script>
+</body>
+</html>

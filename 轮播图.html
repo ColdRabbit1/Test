@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        a{
+            text-decoration: none;
+        }
+        ul li{
+            list-style: none;
+        }
+        ol li{
+            list-style: none;
+            position: absolute;
+            float: left;
+            width: 20px;
+            height: 20px;
+            bottom: 0;
+            border-radius: 10px;
+            background-color: grey;
+            opacity: .7;
+            z-index: 99;
+        }
+        .main {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            margin: 200px auto;
+            overflow: hidden;
+        }
+        ul li img{
+            width: 600px;
+            height: 400px;
+            float: left;
+        }
+        ul{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 600%;
+        }
+       #left,#right{
+           position: absolute;
+           display: none;
+           top: 200px;
+           width: 30px;
+           height: 40px;
+           text-align: center;
+           padding: 5px;
+           font-size: 20px;
+           color: black;
+           background-color: grey;
+           opacity: .5;
+           z-index: 2;
+       }
+        #left{
+            left: 0;
+        }
+        #right{
+            left: 560px;
+        }
+        .con{
+            background-color: #FF7F24;
+        }
+    </style>
+    <script src="animateX.js"></script>
+</head>
+<body>
+<div class="main">
+    <a href="#" id="left"><</a>
+    <a href="#" id="right">></a>
+    <ul>
+        <li><a><img src="images/pifu01.jpeg"></a></li>
+        <li><a><img src="images/pifu02.jpeg"></a></li>
+        <li><a><img src="images/pifu03.jpeg"></a></li>
+        <li><a><img src="images/pifu04.jpeg"></a></li>
+    </ul>
+    <ol>
+    </ol>
+</div>
+<script>
+    //需求一：鼠标经过图片，显示箭头，离开后隐藏箭头
+    // 先获取左右箭头以及事件源ul
+    var main = document.querySelector('.main');
+    var left = document.querySelector('#left');
+    var right = document.querySelector('#right');
+    //添加鼠标经过事件，mousemove，mouseleave
+    main.addEventListener('mouseenter', function () {
+        left.style.display = 'block';
+        right.style.display = 'block';
+        clearInterval(timer);
+        timer = null;
+    });
+    main.addEventListener('mouseleave', function () {
+        left.style.display = 'none';
+        right.style.display = 'none';
+        timer = setInterval(function () {
+            right.click();
+        },2000);
+    });
+    // 需求二：动态生成小圆圈
+    // 获取到ul下的li，返回数组
+    var ul = main.querySelector('ul');
+    var lis = ul.querySelectorAll('li');
+    var ol = document.querySelector('ol');
+    var a = 256;
+    var mainWidth = main.offsetWidth;
+    for(var i=0;i<lis.length;i++){
+        // 创建li元素
+        var li = document.createElement('li');
+        // 添加到ol中  并且向li中写入小圆圈
+        // li.innerHTML = '<a href="#"></a>';
+        li.style.left = a + 'px';
+        a+=30;
+        li.setAttribute('index', i);
+        ol.appendChild(li);
+        // 绑定小圆圈点击事件(没实现)
+        var n = ol.querySelectorAll('li');
+        var m = n[0].getAttribute('index');
+        console.log(m);
+        if(m==0){
+            ol.children[0].style.backgroundColor = '#FF7F24';
+            m++;
+        }
+        else {
+            ol.children[0].style.backgroundColor = '';
+        }
+        li.addEventListener('click', function () {
+            for(var i=0;i<ol.children.length;i++){
+                ol.children[i].style.backgroundColor = '';
+            }
+            this.style.backgroundColor = '#FF7F24';
+            var index = this.getAttribute('index');
+            num = index;
+            circle = index;
+            animate(ul,-index * mainWidth);
+        });
+
+    }
+    // 克隆第一张图片，实现无缝衔接功能
+    var first = ul.children[0].cloneNode(true);
+    ul.appendChild(first);
+    // 节流阀 flag
+    var flag = true;
+    // 右箭头功能实现
+    var num = 0;
+    var circle = 0;
+    right.addEventListener('click',function () {
+        if(flag){
+            flag = false;
+            if(num === ul.children.length-1){
+                ul.style.left = '-600px';
+                num = 1;
+            }else
+            {
+                num++;
+                // 利用回调函数，动画执行完成后开启节流阀
+                animate(ul,-num* mainWidth, function () {
+                    flag = true;
+                });
+            }
+            circle++;
+            if(circle == ol.children.length){
+                circle = 0;
+            }
+            for(var i=0;i<ol.children.length;i++){
+                ol.children[i].style.backgroundColor = '';
+            }
+            ol.children[circle].style.backgroundColor = '#FF7F24';
+        }
+    });
+    // 左箭头功能实现
+    left.addEventListener('click',function () {
+       if(flag){
+           flag = false;
+           if(num == 0){
+               num = ul.children.length - 1;
+               ul.style.left =-num * mainWidth + 'px';
+           }else
+           {
+               num--;
+               animate(ul,-num* mainWidth, function () {
+                   flag = true;
+               });
+           }
+           circle--;
+           if(circle < 0){
+               circle = ol.children.length - 2;
+           }
+           for(var i=0;i<ol.children.length;i++){
+               ol.children[i].style.backgroundColor = '';
+           }
+           ol.children[circle].style.backgroundColor = '#FF7F24';
+       }
+    });
+    // 自动播放功能
+    var timer = setInterval(function () {
+        right.click();
+    },2000);
+</script>
+</body>
+</html>

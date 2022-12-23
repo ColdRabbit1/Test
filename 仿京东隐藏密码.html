@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <style>
+        .box{
+            position: relative;
+            margin: 200px auto;
+            width: 600px;
+            height: 400px;
+            background-color: #D3D3D3;
+            border: #FF7F24 solid 1px;
+            border-radius: 4px;
+            padding-top: 30px;
+        }
+        input{
+            box-sizing: border-box;
+            width: 500px;
+            height: 40px;
+            margin-left: 40px;
+            margin-top: 20px;
+            border-radius: 3px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        input:last-child{
+            background-color: #FF7F24;
+        }
+        img{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            right: 70px;
+            top: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <input type="text" placeholder="请输入用户名"/>
+    <input type="password" placeholder="请输入密码"/>
+    <img src="images/no_eye.svg"/>
+    <input type="button" value="登录"/>
+</div>
+<script>
+    // 1. 获取元素
+    var img = document.querySelector('img');
+    var psd = document.querySelectorAll('input');
+    var flag = 0;
+    img.onclick = function () {
+        if (flag == 0){
+            // 显示密码
+            this.src = 'images/eye.svg';
+            psd[1].type = 'text';
+            flag = 1;
+        }else
+        {
+            // 隐藏密码
+            this.src = 'images/no_eye.svg';
+            psd[1].type = 'password';
+            flag = 0;
+        }
+    }
+</script>
+</body>
+</html>

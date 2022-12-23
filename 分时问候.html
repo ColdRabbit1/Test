@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分时问候</title>
+    <style>
+        .box{
+            position: relative;
+            margin: 200px auto;
+            width: 400px;
+            height: 400px;
+        }
+        img{
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <img src=""/>
+    <p></p>
+</div>
+<script>
+    // 1.获取元素
+    var img = document.querySelector('img');
+    var p = document.querySelector('p');
+    // 2. 获取时间
+    var date = new Date();
+    var h = date.getHours()
+    // 3.判断当前时间
+    if(h<12){
+        img.src = 'images/zs.jpg';
+        p.innerHTML = '上午好，冷兔！今天继续加油呀！';
+    }
+    else if (h<18){
+        img.src = 'images/zw.gif';
+        p.innerHTML = '下午好，冷兔！继续加油呀！';
+    }
+    else {
+        img.src = 'images/ws.gif';
+        p.innerHTML = '晚上好，冷兔！早点休息吧！';
+    }
+</script>
+</body>
+</html>

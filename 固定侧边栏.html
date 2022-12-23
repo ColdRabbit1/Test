@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        .header{
+            width: 1200px;
+            height: 100px;
+            background-color: aqua;
+        }
+        .img{
+            width: 1200px;
+            height: 300px;
+            background-color: hotpink;
+        }
+        .body{
+            width: 1200px;
+            height: 800px;
+            background-color: blueviolet;
+        }
+        .bottom{
+            width: 1200px;
+            height: 100px;
+            background-color: aqua;
+        }
+        .main{
+            position: fixed;
+            width: 40px;
+            height: 100px;
+            top: 400px;
+            right: -10px;
+            background-color: grey;
+        }
+        span{
+            position: absolute;
+            display: none;
+            width: 80px;
+            height: 30px;
+            left: 0px;
+            bottom: 0;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="header">导航栏</div>
+<div class="img">轮播图</div>
+<div class="body">主题</div>
+<div class="bottom">尾部</div>
+<div class="main">
+    <span>返回顶部</span>
+</div>
+<script>
+    // 1. 判断滚动了多大距离，当滚动到img区域时main跟随滚动；到body区域时出现返回顶部
+    var body = document.querySelector('.body');
+    var img = document.querySelector('.img');
+    var main = document.querySelector('.main');
+    var span = document.querySelector('span');
+    //轮播图到顶部的距离
+    var offsetTop = img.offsetTop;
+    //main 最后的位置 = main原来的位置 - img到顶部的距离
+    var mainTop = main.offsetTop - offsetTop;
+    //主题到顶部的距离
+    var bodyTop = body.offsetTop;
+    // 添加页面滚动的监听事件
+    document.addEventListener('scroll',function () {
+        // 如果页面滚动到img 区域  让 main 不再变化 同时，main的位置也改到此处
+        if(window.pageYOffset > offsetTop ){
+            main.style.position = 'fixed'
+            main.style.top = mainTop + 'px';
+        }else {
+            main.style.position = 'absolute';
+            main.style.top = '400px';
+        }
+        // 如果页面滚动到body 区域  让 span 显示出来
+        if(window.pageYOffset >= bodyTop){
+            span.style.display = 'block';
+        }else
+            span.style.display = 'none';
+    });
+    // 返回顶部功能实现
+    span.addEventListener('click',function () {
+        animate(window,0,0,);
+    });
+    function animate(obj,target,callback) {
+        // 调用函数先清除计时器，这样不会出现多次点击按钮重复设置计时器的问题
+        clearInterval(obj.t1);
+        //使用obj.t1写法，解决了内存浪费问题，同时也解决了定时器名字有歧义的问题（因为obj是一个对象，div和span是它的一个属性，在给定时器命名时，div.t1和span.t1就有了不同的名字）
+        // 舍弃了var t1 = setInterval(); 这种写法，因为每次调用该函数时var都会开辟一个新内存空间，造成浪费
+        obj.t1 = setInterval(function () {
+            // 求出步长 step
+            var step = (target - window.pageYOffset) / 10;
+            // Math.ceil() 向上取整，避免盒子前进时出现到不了目标位置的情况；Math.floor()向下取整，避免后退时出现到不了目标位置的情况
+            step = step > 0 ? Math.ceil(step) : Math.floor(step);
+            if (window.pageYOffset == target){
+                clearInterval(obj.t1);
+                // 定时器关闭后，调用回调函数
+                if(callback){
+                    callback();
+                }
+            }else {
+                // obj.style.left = window.pageYOffset + step + 'px';
+                window.scroll(0,window.pageYOffset + step);
+            }
+        }, 15);
+    }
+</script>
+</body>
+</html>

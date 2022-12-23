@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        img{
+            width: 60px;
+            height: 60px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<img src="images/tianshi.jpeg"/>
+<script>
+    var img = document.querySelector('img');
+    document.addEventListener('mousemove',change);
+    function change(ev) {
+        var x = ev.clientX;
+        var y = ev.clientY;
+        img.style.left = x - 30 + 'px';
+        img.style.top = y - 30 + 'px';
+    }
+</script>
+</body>
+</html>

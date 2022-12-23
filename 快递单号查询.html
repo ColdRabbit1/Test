@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询快递单号</title>
+    <style>
+        .box{
+            position: relative;
+            margin: 200px auto;
+            width: 200px;
+            height: 300px;
+        }
+        .con{
+            display: none;
+            width: 260px;
+            height: 30px;
+            margin-bottom: 10px;
+            border: grey solid 1px;
+        }
+        input{
+            width: 200px;
+            height: 25px;
+        }
+        .con::before{
+            content: '';
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 31px;
+            left: 85px;
+            border: 8px solid #000;
+            border-style: solid dashed dashed;
+            border-color: #fff transparent transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="con"></div>
+    <input type="text" placeholder="请输入您要查询的快递单号">
+</div>
+<script>
+    //1. 获取元素
+    var con = document.querySelector('.con');
+    var input = document.querySelector('input');
+    // 2.添加事件
+    input.addEventListener('keyup',function (ev) {
+        if (this.value == ''){
+            con.style.display = 'none';
+        }else{
+            con.style.display = 'block';
+            con.innerHTML = this.value;
+        }
+    });
+    // 3. 搜索框失去焦点  con盒子隐藏
+    input.addEventListener('blur',function () {
+        con.style.display = 'none';
+    });
+    // 4.搜索框得到焦点  con盒子显示
+    input.addEventListener('focus',function () {
+        if (this.value !== ''){
+            con.style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>

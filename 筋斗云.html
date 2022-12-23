@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        .main{
+            position: relative;
+            margin: 100px auto;
+            width: 800px;
+            height: 40px;
+        }
+        ul li{
+            /*position: absolute;*/
+            list-style: none;
+            float: left;
+            width: 100px;
+            height: 40px;
+            background-color: grey;
+            opacity: .5;
+            text-align: center;
+            padding: 10px;
+        }
+        span{
+            position: absolute;
+            background-color: #FF7F24;
+            width: 100px;
+            height: 40px;
+            left: 40px;
+        }
+    </style>
+    <script src="animateX.js"></script>
+</head>
+<body>
+<div class="main">
+    <span class="cloud"></span>
+    <ul>
+        <li class="current"><a href="javascript:;">首页</a></li>
+        <li><a href="javascript:;">部门</a></li>
+        <li><a href="javascript:;">院系</a></li>
+        <li><a href="javascript:;">资源</a></li>
+        <li><a href="javascript:;">帮助</a></li>
+    </ul>
+</div>
+<script>
+    // 获取元素
+    var main = document.querySelector('.main');
+    var span = document.querySelector('span');
+    var lis = document.querySelectorAll('li');
+    var ul = document.querySelector('ul');
+    // current记录span的位置
+    var current = 0;
+    for (var i=0;i<lis.length;i++){
+        lis[i].addEventListener('mousemove', function () {
+            // 鼠标放上去，移动到当前li的位置
+            animate(span,this.offsetLeft);
+        });
+        lis[i].addEventListener('mouseleave', function () {
+            // 鼠标离开，回到原始位置
+            animate(span,current);
+        });
+        lis[i].addEventListener('click', function () {
+            // 鼠标点击，把当前li的位置设置为原始位置
+            current = this.offsetLeft;
+        });
+    }
+</script>
+</body>
+</html>

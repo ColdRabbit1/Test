@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .main{
+            width: 400px;
+            height: 40px;
+            box-sizing: border-box;
+            position: relative;
+            margin: 200px auto;
+            overflow: hidden;
+        }
+        span{
+            width: 40px;
+            height: 40px;
+            background-color: #FF7F24;
+            position: absolute;
+            right: 0;
+            text-align: center;
+            z-index: 99;
+            padding-top: 8px;
+        }
+        .text{
+            position: absolute;
+            width: 150px;
+            height: 40px;
+            text-align: center;
+            right: -150px;
+            background-color: #a07676;
+        }
+    </style>
+    <script src="animateX.js"></script>
+</head>
+<body>
+<div class="main">
+    <span><--</span>
+    <div class="text">问题反馈</div>
+</div>
+<script>
+    // 1. 获取元素
+    var span = document.querySelector('span');
+    var text = document.querySelector('.text');
+    // 2. 给span添加鼠标经过事件
+    span.addEventListener('mousemove', function () {
+        animate(text,210,function () {
+            span.innerHTML = "-->";
+        });
+    });
+    // 3. 添加鼠标离开事件
+    span.addEventListener('mouseleave', function () {
+        animate(text,360,function () {
+            span.innerHTML = "<--";
+        });
+    })
+</script>
+</body>
+</html>

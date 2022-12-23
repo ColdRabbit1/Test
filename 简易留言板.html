@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            width: 400px;
+            height: 600px;
+            position: relative;
+            margin: 200px  auto;
+        }
+        textarea{
+            height: 100px;
+            margin-left: 40px;
+        }
+        ul {
+            width: 400px;
+            height:4000px ;
+        }
+        ul li {
+            list-style: none;
+            width: 400px;
+            height:20px ;
+            background-color: aqua;
+            margin: 20px 0;
+
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <textarea></textarea>
+    <button>留言</button>
+    <ul></ul>
+</div>
+<script>
+    // 1. 获取元素
+    var but = document.querySelector('button');
+    var text = document.querySelector('textarea');
+    var ul = document.querySelector('ul');
+    // 2. 添加点击事件
+    but.onclick = function () {
+        if(text.value != ''){
+            // 创建元素
+            var li = document.createElement('li');
+            // 显示内容
+            li.innerHTML = text.value;
+            // 添加到指定位置
+            ul.insertBefore(li,ul.children[0]);
+
+        }else
+            alert("请输入留言内容！")
+    }
+</script>
+</body>
+</html>

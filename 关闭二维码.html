@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关闭二维码</title>
+    <style>
+        .box{
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 200px auto;
+        }
+        img{
+            position: absolute;
+            margin-left: 20px;
+            width: 350px;
+            height: 350px;
+        }
+        p{
+            position: absolute;
+            margin-top: -15px;
+            margin-left: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <p>x</p>
+    <img src="images/zs.jpg"/>
+</div>
+<script>
+    var p = document.querySelector('p');
+    var box = document.querySelector('.box');
+    p.onclick = function (ev) {
+        box.style.display = 'none';
+    }
+</script>
+</body>
+</html>

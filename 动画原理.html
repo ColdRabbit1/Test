@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画原理</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: #FF7F24;
+            position: absolute;
+            left: 0;
+        }
+        span{
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            left: 0;
+            top: 120px;
+            background-color: #a07676;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<span></span>
+<button>让span动起来</button>
+<script>
+    // 动画原理：
+    //      1. 获得盒子的位置
+    //      2. 通过定时器不断移动盒子
+    //      3. 到达指定位置，关闭计时器
+    //  注意：一定要给盒子加一个定位
+    // 封装一个动画函数 传递两个参数 obj目标盒子  target目标位置
+    function animate(obj,target) {
+        // 调用函数先清除计时器，这样不会出现多次点击按钮重复设置计时器的问题
+        clearInterval(obj.t1);
+        //使用obj.t1写法，解决了内存浪费问题，同时也解决了定时器名字有歧义的问题（因为obj是一个对象，div和span是它的一个属性，在给定时器命名时，div.t1和span.t1就有了不同的名字）
+        // 舍弃了var t1 = setInterval(); 这种写法，因为每次调用该函数时var都会开辟一个新内存空间，造成浪费
+        obj.t1 = setInterval(function () {
+            if (obj.offsetLeft > target){
+                clearInterval(obj.t1);
+            }else {
+                obj.style.left = obj.offsetLeft + 1 + 'px';
+            }
+        }, 50);
+    }
+    var div = document.querySelector('div');
+    var span = document.querySelector('span');
+    var btn = document.querySelector('button')
+    animate(div,300);
+    btn.addEventListener('click', function () {
+        animate(span,200);
+    })
+</script>
+</body>
+</html>

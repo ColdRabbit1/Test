@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索框</title>
+    <style>
+        input{
+            margin: 200px 300px;
+            width: 300px;
+            height: 40px;
+        }
+        img{
+            position:absolute;
+            width: 40px;
+            height: 40px;
+            left: 572px;
+            top: 207px;
+        }
+    </style>
+</head>
+<body>
+<input type="search" placeholder="请输入关键字"/>
+<img src="images/search.png"/>
+<script>
+    // 1. 获取元素
+    var search = document.querySelector('input');
+    // 2. 添加键盘事件
+    document.addEventListener('keyup', function (ev) {
+        // 3. 通过ASCII码值判断按键
+        if(ev.keyCode === 83){
+            // 搜索框得到焦点
+            search.focus();
+        }
+    })
+</script>
+</body>
+</html>
